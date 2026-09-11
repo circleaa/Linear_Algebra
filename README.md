@@ -30,13 +30,18 @@ $$\begin{bmatrix} x \\\\ y \\\\ z \end{bmatrix} = \begin{bmatrix} \cos\theta & -
 *   **Compiler:** g++ 11.4.0
 *   **Library:** OpenCV 4.5.3 (本專案僅使用 OpenCV 進行基礎讀寫，核心數學運算由 C++ 手工實作)
 
-## Usage
-編譯完成後，請透過命令列引數傳入三組參數：車輛圖片檔名、車牌圖片檔名，以及預期的輸出檔名。
+## Algorithm Pipeline
+本系統的影像處理與轉換流程主要分為以下四個階段：
 
-```bash
-# 執行範例
-./main car.png plate.png output.png
-```
+1. **特徵提取 (Feature Extraction)：** 
+   使用色彩空間過濾 (`cv::inRange`) 鎖定車輛影像中的白色區域，並透過形態學擴張 (`cv::dilate`) 填補雜訊，以強化車牌區塊的特徵。
+2. **多邊形逼近與頂點定位 (Contour Approximation & Vertex Sorting)：**
+   利用 `cv::findContours` 尋找最大邊界輪廓後，透過凸包 (`convexHull`) 與 `approxPolyDP` 演算法將其近似為四邊形。隨後將萃取出的四個頂點依空間幾何關係排序為：左上、右上、右下、左下。
+3. **透視矩陣計算 (Perspective Matrix Calculation)：**
+   將原始車牌的四個頂點作為 Source Points，車輛上的四邊形頂點作為 Destination Points，利用 `cv::getPerspectiveTransform` 動態解算 3x3 透視變換矩陣。
+4. **幾何映射與影像合成 (Image Warping & Masking)：**
+   透過 `cv::warpPerspective` 將車牌影像投影至目標視角，最後利用遮罩 (Mask) 遍歷像素，將轉換後的車牌無縫合成至原始車輛影像中。
+   
 
 ## Source Code
 以下為本專案的核心 C++ 實作程式碼。系統透過 OpenCV 讀取影像後，利用形態學與尋找輪廓萃取車牌座標，並動態計算透視變換矩陣。
@@ -162,3 +167,12 @@ int main(int argc, char** argv)
     }
     return 0;
 }
+```
+
+## Usage
+編譯完成後，請透過命令列引數傳入三組參數：車輛圖片檔名、車牌圖片檔名，以及預期的輸出檔名。
+
+```bash
+# 執行範例
+./main car.png plate.png output.png
+```
