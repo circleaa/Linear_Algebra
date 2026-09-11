@@ -23,7 +23,7 @@
 
 例如，當物體繞 Z 軸旋轉 $\theta$ 角度時，其座標變換可由以下旋轉矩陣 $R_z$ 表示：
 
-$$ \begin{bmatrix} x \\ y \\ z \end{bmatrix} = \begin{bmatrix} \cos\theta & -\sin\theta & 0 \\ \sin\theta & \cos\theta & 0 \\ 0 & 0 & 1 \end{bmatrix} \begin{bmatrix} x' \\ y' \\ z' \end{bmatrix} $$
+$$\begin{bmatrix} x \\\\ y \\\\ z \end{bmatrix} = \begin{bmatrix} \cos\theta & -\sin\theta & 0 \\\\ \sin\theta & \cos\theta & 0 \\\\ 0 & 0 & 1 \end{bmatrix} \begin{bmatrix} x' \\\\ y' \\\\ z' \end{bmatrix}$$
 
 同理，系統內部亦實作了針對 X 軸 ($R_x$) 與 Y 軸 ($R_y$) 的旋轉矩陣，以確保車牌在三維空間投影轉換時的精準度。
 
