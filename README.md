@@ -36,9 +36,9 @@ $$\begin{bmatrix} x \\\\ y \\\\ z \end{bmatrix} = \begin{bmatrix} \cos\theta & -
 ```bash
 # 執行範例
 ./main car.png plate.png output.png
+```
 
 ## Source Code
-
 以下為本專案的核心 C++ 實作程式碼。系統透過 OpenCV 讀取影像後，利用形態學與尋找輪廓萃取車牌座標，並動態計算透視變換矩陣。
 
 ```cpp
