@@ -46,6 +46,8 @@ $$\begin{bmatrix} x \\\\ y \\\\ z \end{bmatrix} = \begin{bmatrix} \cos\theta & -
 ## Source Code
 以下為本專案的核心 C++ 實作程式碼。系統透過 OpenCV 讀取影像後，利用形態學與尋找輪廓萃取車牌座標，並動態計算透視變換矩陣。
 
+[完整程式碼](./hw2-Perspective_Transform.cpp)
+
 ```cpp
 #include <opencv2/opencv.hpp>
 #include <iostream>
